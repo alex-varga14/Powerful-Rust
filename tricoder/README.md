@@ -1,0 +1,4 @@
+# USAGE
+```
+cargo run -- <target>
+```
