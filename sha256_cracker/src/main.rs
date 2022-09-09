@@ -1,12 +1,9 @@
+use sha256::{digest, digest_bytes};
 use std::{
     env,
     error::Error,
     fs::File,
     io::{BufRead, BufReader},
-}; 
-use sha256::{
-    digest_bytes,
-    digest,
 };
 
 const SHA256_HEX_STRING_LENGTH: usize = 64;
@@ -17,7 +14,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     if args.len() != 3 {
         println!("Usage:");
         println!("sha256_cracker: <wordlist.txt> <sha256_hash>"); //Reminder: println with ! is not a function,
-        return Ok(());                                              // it is a MACRO
+        return Ok(()); // it is a MACRO
     }
 
     let hash_to_crack = args[2].trim();
@@ -32,11 +29,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     for line in reader.lines() {
         let line = line?;
         let common_password = line.trim();
-        if hash_to_crack ==
-            sha256::digest(common_password) {
-                println!("Password found: {}", &common_password);
-                return Ok(());
-            }
+        if hash_to_crack == sha256::digest(common_password) {
+            println!("Password found: {}", &common_password);
+            return Ok(());
+        }
     }
     println!("Password not found in wordlist.");
 
